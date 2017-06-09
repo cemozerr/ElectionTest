@@ -26,10 +26,6 @@ contract Ballot2{
         // go through citizens, and grant them the right to vote
         for (uint32 i = 0; i < population; i++){
             vote_token.transfer(_citizens[i],1);
-	    debug_address(_citizens[i]);
-            debug_balance(vote_token.balanceOf(_citizens[i]));
-
-            
         }
         
         // go through candidate names, and set their tally to 1, in order
@@ -38,6 +34,13 @@ contract Ballot2{
         for (uint32 j = 0; j < _names.length; j++){
             candidates[_names[j]] = 1;
             names.push(_names[j]);
+        }
+    }
+
+    function checkCitizenship(address[] _citizens){
+        for (uint32 i = 0; i < _citizens.length; i++){
+            debug_address(_citizens[i]);
+            debug_balance(vote_token.balanceOf(_citizens[i]));
         }
     }
    
