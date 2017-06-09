@@ -21,22 +21,27 @@ contract Ballot2{
     function Ballot2(address[] _citizens, bytes32[] _names){
         govt = msg.sender;
         population = _citizens.length;
-        vote_token = new HumanStandardToken(population, "vote_token", 0,"");
+        vote_token = new HumanStandardToken(population, "vote_token", 3,"");
         
+        // go through citizens, and grant them the right to vote
         for (uint32 i = 0; i < population; i++){
             vote_token.approve(_citizens[i],1);
             vote_token.transfer(_citizens[i],1);
-            debug_address(_citizens[i]);
+	    debug_address(_citizens[i]);
             debug_balance(vote_token.balanceOf(_citizens[i]));
+
             
         }
         
+        // go through candidate names, and set their tally to 1, in order
+        // to make only names defined by government voteable. 
+        // push those names to a state variable to check their tally in the end
         for (uint32 j = 0; j < _names.length; j++){
             candidates[_names[j]] = 1;
             names.push(_names[j]);
         }
     }
-    
+   
     function ask_to_vote(bytes32 _vote){
         vote_token.approve(govt,1);
         //require(vote_token.transferFrom(msg.sender, govt, 1));
