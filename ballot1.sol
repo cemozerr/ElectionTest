@@ -45,13 +45,10 @@ contract Ballot2{
     }
    
     function ask_to_vote(bytes32 _vote){
-        vote_token.approve(govt,1);
-        //require(vote_token.transferFrom(msg.sender, govt, 1));
-        require(!voted[msg.sender]);
+        require(vote_token.transferFrom(govt, msg.sender, 1));
         require(candidates[_vote] != 0);
          
         candidates[_vote]++;
-        voted[msg.sender] = true;
         if (vote_token.balanceOf(govt) == population){
             announce_winner();
         }
