@@ -25,7 +25,7 @@ contract Ballot2{
         
         // go through citizens, and grant them the right to vote
         for (uint32 i = 0; i < population; i++){
-            vote_token.transfer(_citizens[i],1);
+            vote_token.approve(_citizens[i],1);
         }
         
         // go through candidate names, and set their tally to 1, in order
